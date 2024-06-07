@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Interface</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Query Interface</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="alert alert-{{ messages[0][0] }}">
+              {{ messages[0][1] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST" action="/index">
+            <div class="form-group">
+                <label for="target_name">Target Name:</label>
+                <input type="text" class="form-control" id="target_name" name="target_name" required>
+            </div>
+            <div class="form-group">
+                <label for="titles">Select Titles:</label>
+                <select multiple class="form-control" id="titles" name="titles[]" required>
+                    {% for title in titles %}
+                        <option value="{{ title }}">{{ title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="no_of_titles">Number of Titles:</label>
+                <input type="number" class="form-control" id="no_of_titles" name="no_of_titles" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#titles').select2({
+                placeholder: "Select Titles",
+                allowClear: true
+            });
+        });
+    </script>
+</body>
+</html>
